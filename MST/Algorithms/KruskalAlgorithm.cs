@@ -27,8 +27,6 @@ namespace MST.Algorithms
                     parents[endNodeRoot] = startNodeRoot;
                 }
             }
-
-            PrintMST("Kruskal");
         }
         private int FindRoot(int node, int[] parent)
         {

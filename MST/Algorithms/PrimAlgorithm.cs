@@ -43,8 +43,6 @@ namespace MST.Algorithms
                     }
                 });
             });
-
-            PrintMST("Prim");
         }
 
         // Find the vertex with minimum key value, from the set of vertices not yet included in MST

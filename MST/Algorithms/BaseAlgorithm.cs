@@ -17,7 +17,7 @@ namespace MST.Algorithms
 
         internal abstract void Run();
 
-        protected void PrintMST(string algorithmName)
+        internal void PrintMST(string algorithmName)
         {
             Console.WriteLine($"----- MST - {algorithmName} Algorithm -----");
             foreach (var egde in minimumSpanningTree)

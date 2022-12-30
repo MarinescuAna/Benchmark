@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomBenchmark.Core", "Cus
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MST", "..\MST\MST.csproj", "{AED37B66-9D6B-4D7B-9668-B988B93EB843}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomBenchmark.Helper", "..\CustomBenchmark.Helper\CustomBenchmark.Helper.csproj", "{3609006C-0DF1-415E-AEDE-75B8D4B489C4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{AED37B66-9D6B-4D7B-9668-B988B93EB843}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AED37B66-9D6B-4D7B-9668-B988B93EB843}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AED37B66-9D6B-4D7B-9668-B988B93EB843}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3609006C-0DF1-415E-AEDE-75B8D4B489C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3609006C-0DF1-415E-AEDE-75B8D4B489C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3609006C-0DF1-415E-AEDE-75B8D4B489C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3609006C-0DF1-415E-AEDE-75B8D4B489C4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

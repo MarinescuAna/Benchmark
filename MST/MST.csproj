@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CustomBenchmark.Helper\CustomBenchmark.Helper.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="Graph.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
