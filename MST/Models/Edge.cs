@@ -1,10 +1,10 @@
-﻿namespace MinimumSpanningTree.Models
+﻿namespace MST.Models
 {
     internal sealed class Edge : IComparable<Edge>
     {
-        public int Source { get; set; }
-        public int Destination { get; set; }
-        public int Weight { get; set; }
+        internal int Source { get; set; }
+        internal int Destination { get; set; }
+        internal int Weight { get; set; }
 
         public int CompareTo(Edge edge) => Weight - edge.Weight;
     }

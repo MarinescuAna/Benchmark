@@ -1,28 +1,19 @@
-﻿using MinimumSpanningTree.Models;
+﻿using MST.Models;
 
-namespace MinimumSpanningTree.Algorithms
+namespace MST.Algorithms
 {
-    internal sealed class KruskalAlgorithm
+    internal sealed class KruskalAlgorithm: BaseAlgorithm
     {
-        private Graph _graph;
-
-        internal KruskalAlgorithm(Graph graph)
+        internal KruskalAlgorithm(Graph graph):base(graph) { }
+        internal override void Run()
         {
-            _graph = graph;
-        }
-
-        internal void Run()
-        {
-            // This array is used for storing the minimum spanning tree
-            var minimumSpanningTree = new List<Edge>();
-
             /// Strep1: Sort all the edges in non-decreasing order of thier weight
-            _graph.Edges.Sort();
+            graph.Edges.Sort();
 
             // Set parents table
-            var parents = Enumerable.Range(0, _graph.VerticesNumber).ToArray();
+            var parents = Enumerable.Range(0, graph.VerticesNumber).ToArray();
 
-            foreach (var edge in _graph.Edges)
+            foreach (var edge in graph.Edges)
             {
                 var startNodeRoot = FindRoot(edge.Source, parents);
                 var endNodeRoot = FindRoot(edge.Destination, parents);
@@ -37,7 +28,7 @@ namespace MinimumSpanningTree.Algorithms
                 }
             }
 
-            Console.WriteLine(string.Format(Constants.TextDisplayKruskalAlg, minimumSpanningTree.Sum(u => u.Weight)));
+            PrintMST("Kruskal");
         }
         private int FindRoot(int node, int[] parent)
         {
