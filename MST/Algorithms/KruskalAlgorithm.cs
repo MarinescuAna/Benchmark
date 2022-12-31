@@ -1,4 +1,4 @@
-﻿using MST.Models;
+﻿using MST.Entities;
 
 namespace MST.Algorithms
 {
@@ -8,7 +8,7 @@ namespace MST.Algorithms
         internal override void Run()
         {
             /// Strep1: Sort all the edges in non-decreasing order of thier weight
-            graph.Edges.Sort();
+            graph.Edges!.Sort();
 
             // Set parents table
             var parents = Enumerable.Range(0, graph.VerticesNumber).ToArray();

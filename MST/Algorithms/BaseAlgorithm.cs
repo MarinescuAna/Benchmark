@@ -1,4 +1,4 @@
-﻿using MST.Models;
+﻿using MST.Entities;
 
 namespace MST.Algorithms
 {
@@ -9,7 +9,7 @@ namespace MST.Algorithms
         // Array to store constructed MST
         protected List<Edge> minimumSpanningTree;
 
-        public BaseAlgorithm(Graph graph)
+        internal BaseAlgorithm(Graph graph)
         {
             this.graph = graph;
             minimumSpanningTree = new List<Edge>();

@@ -1,43 +1,60 @@
-﻿using CustomBenchmark.Helper;
+﻿using CustomBenchmark.Core.Helpers.Labels;
 using MST.Algorithms;
-using MST.Models;
+using MST.Entities;
 
+var printResults = false;
 var graph = new Graph();
 BaseAlgorithm algorithm;
 
-using (_ = new Label("Load graph"))
+if (args.Length == 0)
 {
-    graph.LoadGraph();
+    throw new ArgumentException("Arguments are missing: (input printResults)!!");
 }
 
-using (_ = new Label("Prim's algorithm - initializations and memory allocation"))
+if (!bool.TryParse(args[1],out printResults))
+{
+    throw new ArgumentException("Invalid argument!");
+}
+
+using (_ = new Label("[Start]Load graph"))
+{
+    graph.LoadGraph(args[0]);
+}
+
+using (_ = new Label("[Start]Prim's algorithm - initializations and memory allocation"))
 {
     algorithm = new PrimAlgorithm(graph);
 }
 
-using (_ = new Label("Prim's algorithm - run algoritm"))
+using (_ = new Label("[Start]Prim's algorithm - run algoritm"))
 {
     algorithm.Run();
 }
 
-using (_ = new Label("Prim's algorithm - print MST"))
+if (printResults)
 {
-    algorithm.PrintMST("Prim's");
+    using (_ = new Label("[Start]Prim's algorithm - print MST"))
+    {
+        algorithm.PrintMST("Prim's");
+    }
 }
 
-using (_ = new Label("Kruskal's algorithm - initializations and memory allocation"))
+using (_ = new Label("[Start]Kruskal's algorithm - initializations and memory allocation"))
 {
     algorithm = new KruskalAlgorithm(graph);
 }
 
-using (_ = new Label("Kruskal's algorithm - run algoritm"))
+using (_ = new Label("[Start]Kruskal's algorithm - run algoritm"))
 {
     algorithm.Run();
 }
 
-using (_ = new Label("Kruskal's algorithm - print MST"))
+if (printResults)
 {
-    algorithm.PrintMST("Kruskal's");
+    using (_ = new Label("[Start]Kruskal's algorithm - print MST"))
+    {
+        algorithm.PrintMST("Kruskal's");
+    }
 }
 
 

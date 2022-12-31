@@ -1,0 +1,19 @@
+{
+  "collectionTime": 50,
+  "configGenerator": {
+    "exeGeneratorPath": "C:\\Users\\marin\\source\\repos\\Benchmark\\MST.UndirectedGraphGenerator\\bin\\Release\\net7.0\\MST.UndirectedGraphGenerator.exe",
+    "graphConfig": [
+      {
+        "vertices": 10,
+        "maxValueWeight": 10
+      },
+      {
+        "vertices": 9,
+        "maxValueWeight": 30
+      }
+    ]
+  },
+  "exeMSTPath": "C:\\Users\\marin\\source\\repos\\Benchmark\\MST\\bin\\Release\\net7.0\\MST.exe",
+  "inputFilePath": "C:\\Users\\marin\\source\\repos\\Benchmark\\MST\\Graph.txt",
+  "outputFolderPath": "C:\\Users\\marin\\source\\repos\\Benchmark\\CustomBenchmark.Core\\Results"
+}

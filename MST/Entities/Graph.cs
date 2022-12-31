@@ -1,14 +1,14 @@
-﻿namespace MST.Models
+﻿namespace MST.Entities
 {
     internal sealed class Graph
     {
         internal int VerticesNumber { get; private set; }
-        internal List<Edge> Edges { get; private set; }
+        internal List<Edge>? Edges { get; private set; }
 
-        internal void LoadGraph()
+        internal void LoadGraph(string inputPath)
         {
             // load the adjacency matrix from the file
-            var streamReader = new StreamReader("Graph.txt");
+            var streamReader = new StreamReader(inputPath);
             var adjacencyMatrix = streamReader.ReadToEnd().Trim().Split(Environment.NewLine).Select(line => line.Trim().Split(" ").Select(u => int.Parse(u)).ToArray()).ToArray();
 
             // initialize the edges number,  the edges list and the index used to add the edges into the list
@@ -35,10 +35,10 @@
         }
 
         internal bool EdgeExists(int source, int destination) =>
-            Edges.Any(e => (e.Source == source && e.Destination == destination) ||
+            Edges!.Any(e => (e.Source == source && e.Destination == destination) ||
                          (e.Destination == source && e.Source == destination));
         internal Edge GetEdge(int source, int destination) =>
-            Edges.FirstOrDefault(e => (e.Source == source && e.Destination == destination) ||
+            Edges!.FirstOrDefault(e => (e.Source == source && e.Destination == destination) ||
                                     (e.Destination == source && e.Source == destination))!;
     }
 }

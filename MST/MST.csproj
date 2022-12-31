@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CustomBenchmark.Helper\CustomBenchmark.Helper.csproj" />
+    <ProjectReference Include="..\CustomBenchmark.Core\CustomBenchmark.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>

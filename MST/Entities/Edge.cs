@@ -1,4 +1,4 @@
-﻿namespace MST.Models
+﻿namespace MST.Entities
 {
     internal sealed class Edge : IComparable<Edge>
     {
@@ -6,6 +6,6 @@
         internal int Destination { get; set; }
         internal int Weight { get; set; }
 
-        public int CompareTo(Edge edge) => Weight - edge.Weight;
+        public int CompareTo(Edge? edge) => Weight - edge!.Weight;
     }
 }

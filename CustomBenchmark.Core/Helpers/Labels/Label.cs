@@ -1,4 +1,4 @@
-﻿namespace CustomBenchmark.Helper
+﻿namespace CustomBenchmark.Core.Helpers.Labels
 {
     public class Label : IDisposable
     {
@@ -8,7 +8,7 @@
         }
         public void Dispose()
         {
-            Console.WriteLine("[Stop]");
+            Console.WriteLine(Tag.Tags[TagType.Stop]);
         }
     }
 }

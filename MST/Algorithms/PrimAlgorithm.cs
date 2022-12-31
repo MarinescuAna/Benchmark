@@ -1,4 +1,4 @@
-﻿using MST.Models;
+﻿using MST.Entities;
 
 namespace MST.Algorithms
 {
