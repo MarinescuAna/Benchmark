@@ -6,7 +6,7 @@ var printResults = false;
 var graph = new Graph();
 BaseAlgorithm algorithm;
 
-if (args.Length == 0)
+if (args.Length != 2)
 {
     throw new ArgumentException("Arguments are missing: (input printResults)!!");
 }

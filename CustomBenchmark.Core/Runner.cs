@@ -40,7 +40,7 @@ namespace CustomBenchmark.Core
                 };
 
                 //Run MST process, both algorithms
-                RunNewProcess(_configuration.InputFilePath, _configuration.ExeMstPath, _configuration.CollectionTime, result);
+                RunNewProcess($"{_configuration.InputFilePath} false", _configuration.ExeMstPath, _configuration.CollectionTime, result);
                 results.Add(result);
             }
 
