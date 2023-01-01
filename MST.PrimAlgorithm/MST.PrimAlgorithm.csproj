@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CustomBenchmark.Core\CustomBenchmark.Core.csproj" />
     <ProjectReference Include="..\MST.Common\MST.Common.csproj" />
   </ItemGroup>
 

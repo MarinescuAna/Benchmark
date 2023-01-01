@@ -2,13 +2,12 @@
 {
     public class Label : IDisposable
     {
+        private readonly string _massageName;
         public Label(string message)
         {
-            Console.WriteLine(message);
+            _massageName = message;
+            Console.WriteLine($"{Tag.Tags[TagType.Start]}{_massageName}");
         }
-        public void Dispose()
-        {
-            Console.WriteLine(Tag.Tags[TagType.Stop]);
-        }
+        void IDisposable.Dispose() => Console.WriteLine($"{Tag.Tags[TagType.Stop]}{_massageName}");
     }
 }

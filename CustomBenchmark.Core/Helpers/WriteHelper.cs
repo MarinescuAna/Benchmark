@@ -5,7 +5,7 @@ namespace CustomBenchmark.Core.Helpers
 {
     public static class WriteHelper
     {
-        public static void PrintResults(List<Result> results, Config config)
+        public static void PrintResults(Dictionary<string, List<Result>> results, Config config)
         {
             StreamWriter? streamWriter = null;
 
@@ -18,36 +18,59 @@ namespace CustomBenchmark.Core.Helpers
             {
                 streamWriter = new StreamWriter($"{config.OutputFolderPath}\\{DateTime.Now.Date.Day}{DateTime.Now.Date.Month}{DateTime.Now.Date.Year}{DateTime.Now.Date.Minute}_log.txt");
 
-                for (var i = 0; i < results.Count; i++)
+                foreach (var application in results)
                 {
-                    Console.WriteLine($"\n\n========Experiment {i+1}======");
-                    Console.WriteLine($"Configuration details:");
-                    Console.WriteLine($"\t Undirected graph with {config.ConfigGenerator.GraphConfigurations[i].Vertices} vertices with values between [0,{config.ConfigGenerator.GraphConfigurations[i].MaxValueWeight}]\n \t The waiting time between measurements: {config.CollectionTime} ms");
-                    Console.WriteLine("\nTimes recorded after the following events:");
-                    foreach (var log in results[i].TimeResults!)
+                    streamWriter.WriteLine($"""
+                        
+                        ************************************************************
+                        ******************** {application.Key} ********************
+                        ************************************************************
+                        
+                        """);
+
+                    for (var i = 0; i < application.Value.Count; i++)
                     {
-                        Console.WriteLine($"\t{log}");
+                        streamWriter.WriteLine($"""
+                            
+                            ================================
+                            ======= Experiment {i + 1} =======
+                            ================================
+                            
+                            """);
+
+                        streamWriter.WriteLine($"Configuration details:");
+                        streamWriter.WriteLine($"""
+                                Undirected graph with {config.ConfigGenerator.GraphConfigurations[i].Vertices} vertices and values between [0,{config.ConfigGenerator.GraphConfigurations[i].MaxValueWeight}] 
+                                The waiting time between measurements: {config.CollectionTime} ms
+                            """);
+
+                        if (application.Value[i].TimeResults != null)
+                        {
+                            streamWriter.WriteLine("\nTimes recorded after the following events:");
+                            foreach (var result in application.Value[i].TimeResults!)
+                            {
+                                streamWriter.WriteLine($"\t{result.Key} : {(float)result.Value.ElapsedMilliseconds / 1000} s");
+                            }
+                        }
+
+                        streamWriter.WriteLine($"\nThe memory used during the process of finding the MST: \n{application.Value[i].ProcessResult}");
+                        streamWriter.WriteLine($"\tTotal processor time : {(float)application.Value[i].TotalProcessorTime.Milliseconds / 1000} s");
+                        application.Value[i].OtherMessages?.ForEach(log => streamWriter.WriteLine($"\t{log}"));
                     }
-                    Console.WriteLine("\nThe memory used during the process of finding the MST:");
-                    foreach (var log in results[i].IntermediaryResults!)
-                    {
-                        Console.WriteLine(log);
-                    }
-                    Console.WriteLine($"\nTotal processor time : {(float)results[i].TotalProcessorTime.Milliseconds/1000} s");
                 }
                 streamWriter.Close();
             }
             catch
             {
-                throw new Exception("Invalid directory path!");
+                throw new Exception(Constants.InvalidPath_Exception);
             }
             finally
             {
-
+                Console.WriteLine("The file was generated!");
                 streamWriter?.Dispose();
 
             }
         }
-            
+
     }
 }

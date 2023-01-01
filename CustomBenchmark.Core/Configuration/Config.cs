@@ -12,7 +12,7 @@ namespace CustomBenchmark.Core.Configuration
         public required ConfigGenerator ConfigGenerator { get; init; }
         [JsonPropertyName("collectionTime")]
         public required int CollectionTime { get; init; }
-        [JsonPropertyName("exeMSTPath")]
-        public required string ExeMstPath { get; init; }
+        [JsonPropertyName("applicationsExePaths")]
+        public required Dictionary<string,string> ApplicationsExePaths { get; init; }
     }
 }

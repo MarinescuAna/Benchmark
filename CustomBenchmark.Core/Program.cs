@@ -4,20 +4,17 @@ using System.Text.Json;
 
 Config? config = null;
 
-try
-{
-    config = JsonSerializer.Deserialize<Config>(File.ReadAllText("config.json"));
-}
-catch
-{
-    throw new Exception("Can't read the config.json file!");
-}
+var projectFolderPath = args[0] ?? throw new Exception(Constants.MissingArguments_Exception);
+
+// Get the settings from the config.json file
+config = JsonSerializer.Deserialize<Config>(File.ReadAllText(Constants.ConfigFileName)) ?? throw new Exception(Constants.InvalidConfigFile_Exception);
 
 if (config == null)
 {
-    throw new Exception("The configuration file is missing!");
+    throw new Exception(Constants.ConfigurationFileMissing_Exception);
 }
 
-var runner = new Runner(config);
+// Run the processes
+var runner = new Runner(config,projectFolderPath);
 runner.Run();
 

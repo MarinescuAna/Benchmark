@@ -1,8 +1,0 @@
-{
-  "profiles": {
-    "MST.UndirectedGraphGenerator": {
-      "commandName": "Project",
-      "commandLineArgs": "C:\\Users\\marin\\source\\repos\\Benchmark\\MST\\Graph.txt 10 9"
-    }
-  }
-}

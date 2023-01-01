@@ -9,12 +9,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CustomBenchmark.Core\CustomBenchmark.Core.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="Graph.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <ProjectReference Include="..\MST.Common\MST.Common.csproj" />
   </ItemGroup>
 
 </Project>

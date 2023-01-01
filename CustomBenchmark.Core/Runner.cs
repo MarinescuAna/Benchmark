@@ -1,6 +1,5 @@
 ﻿using BenchmarkRunner.Entities;
 using CustomBenchmark.Core.Configuration;
-using CustomBenchmark.Core.Entities;
 using CustomBenchmark.Core.Events;
 using CustomBenchmark.Core.Helpers;
 using System.Diagnostics;
@@ -9,46 +8,55 @@ namespace CustomBenchmark.Core
 {
     public sealed class Runner
     {
+        private readonly string _projectFolderPath;
         private readonly Config _configuration;
         private readonly OutputCollectorHelper _outputCollector;
-        public Runner(Config config)
+        public Runner(Config config, string path)
         {
+            _projectFolderPath = path;
             _configuration = config;
             _outputCollector = new OutputCollectorHelper();
         }
 
         public void Run()
         {
-            var results = new List<Result>();
+            var results = new Dictionary<string, List<Result>>();
+
+            // Foreach graph configurations provided via json file, do the following actions:
             foreach (var config in _configuration.ConfigGenerator.GraphConfigurations)
             {
-                // Run process for generating the adjacency matrix according to the configuration file
-                // This process is not measured
-                RunNewProcess($"{_configuration.InputFilePath} {config.Vertices} {config.MaxValueWeight}", _configuration.ConfigGenerator.ExeGeneratorPath, 0, null, false);
+                // Run process for generating the adjacency matrix according to the configuration file, without saving any information about it 
+                _ = RunNewProcess($"{_projectFolderPath}{_configuration.InputFilePath} {config.Vertices} {config.MaxValueWeight}", $"{_projectFolderPath}{_configuration.ConfigGenerator.ExeGeneratorPath}", 0, false);
 
+                // If any error occured, stop the process
                 if (_outputCollector.ErrorOccured)
                 {
                     return;
                 }
 
-                var result = new Result()
+                // Having the adjacency matrix generated according to the given configuration, run all the process and log the results
+                foreach (var exe in _configuration.ApplicationsExePaths)
                 {
-                    IntermediaryResults = new List<IntermediaryResult>(),
-                    TimeResults = new List<TimeResult>() {
-                    new TimeResult("The adjacency matrix was created!(No measurements was made to this action)", TimeSpan.Zero)
-                }
-                };
+                    // If the process wasn't run by this moment, add it into the dictionary
+                    if (!results.ContainsKey(exe.Key))
+                    {
+                        results.Add(exe.Key, new());
+                    }
 
-                //Run MST process, both algorithms
-                RunNewProcess($"{_configuration.InputFilePath} false", _configuration.ExeMstPath, _configuration.CollectionTime, result);
-                results.Add(result);
+                    // Run the algorithm for the given graph and pick up the results
+                    results[exe.Key].Add(RunNewProcess($"{_projectFolderPath}{_configuration.InputFilePath}", $"{_projectFolderPath}{exe.Value}", _configuration.CollectionTime));
+                }
             }
 
+            // For each applications, display the collected results
             WriteHelper.PrintResults(results, _configuration);
+
         }
 
-        public void RunNewProcess(string args, string exePath, int collectionTime, Result? result, bool redirectStandardOutput = true)
+        public Result RunNewProcess(string args, string exePath, int collectionTime, bool redirectStandardOutput = true)
         {
+            // Create the process
+            var result = new Result();
             using var process = new Process()
             {
                 StartInfo = new ProcessStartInfo
@@ -70,7 +78,16 @@ namespace CustomBenchmark.Core
             // Capture error output
             process.ErrorDataReceived += _outputCollector.Process_ThrowError;
 
-            process.Start();
+
+            // Start process
+            try
+            {
+                process.Start();
+             }
+            catch
+            {
+                throw new Exception(Constants.InvalidPath_Exception);
+            }
 
             process.BeginErrorReadLine();
             if (redirectStandardOutput)
@@ -78,28 +95,31 @@ namespace CustomBenchmark.Core
                 process.BeginOutputReadLine();
             }
 
+            // While the process still running, collect the results
             do
             {
-                if (result != null)
+                if (redirectStandardOutput)
                 {
-                    // Display current process statistics.
                     var collectedResult = CollectorHelper.CollectTemporaryData(process);
                     if (collectedResult != null)
                     {
-                        result!.IntermediaryResults!.Add(collectedResult);
+                        result.ProcessResult = collectedResult;
                     }
                     process.Refresh();
                 }
             } while (!process.WaitForExit(collectionTime));
 
-            if (result != null)
+            // Get the last results
+            if (redirectStandardOutput)
             {
                 result.TotalProcessorTime = process.TotalProcessorTime;
-                result.TimeResults!.AddRange(_outputCollector.TimeResults);
+                result.TimeResults = _outputCollector.TimeResults;
+                result.OtherMessages = _outputCollector.OtherMessages;
             }
 
             process.Close();
 
+            return result!;
         }
     }
 }

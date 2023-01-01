@@ -1,7 +1,11 @@
 {
-  "collectionTime": 50,
+  "applicationsExePaths": {
+    "Kruskal's Algorithm": "MST.KruskalAlgorithm\\bin\\Release\\net7.0\\MST.KruskalAlgorithm.exe",
+    "Prim's Algorithm": "MST.PrimAlgorithm\\bin\\Release\\net7.0\\MST.PrimAlgorithm.exe"
+  },
+  "collectionTime": 500,
   "configGenerator": {
-    "exeGeneratorPath": "C:\\Users\\marin\\source\\repos\\Benchmark\\MST.UndirectedGraphGenerator\\bin\\Release\\net7.0\\MST.UndirectedGraphGenerator.exe",
+    "exeGeneratorPath": "MST.UndirectedGraphGenerator\\bin\\Release\\net7.0\\MST.UndirectedGraphGenerator.exe",
     "graphConfig": [
       {
         "vertices": 10,
@@ -13,7 +17,6 @@
       }
     ]
   },
-  "exeMSTPath": "C:\\Users\\marin\\source\\repos\\Benchmark\\MST\\bin\\Release\\net7.0\\MST.exe",
-  "inputFilePath": "C:\\Users\\marin\\source\\repos\\Benchmark\\MST\\Graph.txt",
-  "outputFolderPath": "C:\\Users\\marin\\source\\repos\\Benchmark\\CustomBenchmark.Core\\Results"
+  "inputFilePath": "CustomBenchmark.Core\\Inputs\\Graph.txt",
+  "outputFolderPath": "CustomBenchmark.Core\\Results"
 }

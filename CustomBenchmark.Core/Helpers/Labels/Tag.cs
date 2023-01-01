@@ -7,11 +7,13 @@
         {
             { TagType.Stop,"[Stop]" },
             { TagType.Start,"[Start]" },
+            { TagType.Other,"[Other]" },
         };
     }
     public enum TagType
     {
         Stop,
-        Start
+        Start,
+        Other
     }
 }

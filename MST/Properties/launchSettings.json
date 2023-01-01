@@ -1,8 +1,0 @@
-{
-  "profiles": {
-    "MST": {
-      "commandName": "Project",
-      "commandLineArgs": "C:\\Users\\marin\\source\\repos\\Benchmark\\MST\\Graph.txt false"
-    }
-  }
-}

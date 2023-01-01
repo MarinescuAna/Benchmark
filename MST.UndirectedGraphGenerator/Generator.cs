@@ -1,31 +1,26 @@
-﻿namespace MST.UndirectedGraphGenerator
+﻿using MST.Common;
+
+namespace MST.UndirectedGraphGenerator
 {
-    internal sealed class Generator : IDisposable
+    internal sealed class Generator
     {
-        private int _noVertices;
-        private int _maxRangeWeight;
-        private StreamWriter? _streamWriter;
+        private readonly int _noVertices;
+        private readonly int _maxRangeWeight;
+        private readonly StreamWriter? _streamWriter;
 
         internal Generator(string[] args)
         {
             if (args.Length != 3)
             {
-                throw new ArgumentException("Arguments are missing: (outputPath noVertices maxWeightValue)!!");
+                //(outputPath noVertices maxWeightValue)
+                throw new ArgumentException(Constants.MissingArguments_ExceptionMessage);
             }
 
-            try
-            {
-                _streamWriter = new StreamWriter(args[0]);
-            }
-            catch
-            {
-                throw new Exception("Invalid file path!");
-            }
-
+            _streamWriter = new StreamWriter(args[0]) ?? throw new Exception(Constants.InvalidFilePath_ExceptionMessage);
 
             if (!int.TryParse(args[1], out _noVertices) || !int.TryParse(args[2], out _maxRangeWeight))
             {
-                throw new ArgumentException("Invalid arguments!!");
+                throw new ArgumentException(Constants.InvalidArguments_ExceptionMessage);
             }
         }
 
@@ -71,10 +66,5 @@
         }
         private int GenerateValue() =>
             new Random().Next() % 2 == 0 ? 0 : new Random().Next(_maxRangeWeight);
-
-        public void Dispose()
-        {
-            _streamWriter!.Dispose();
-        }
     }
 }
