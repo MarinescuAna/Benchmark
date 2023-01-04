@@ -10,7 +10,6 @@
         public required TimeSpan UserProcessorTime { get; init; }
         // The amount of time that the process has spent running code inside the operating system core.
         public required TimeSpan PrivilegedProcessorTime { get; init; }
-        // The amount of time that the associated process has spent utilizing the CPU. This value is the sum of the UserProcessorTime and the PrivilegedProcessorTime.
         // Gets the maximum amount of physical memory, in bytes, used by the associated process.
         public required float PeakWorkingSet64 { get; init; }
         // Gets the maximum amount of memory in the virtual memory paging file, in bytes, used by the associated process.

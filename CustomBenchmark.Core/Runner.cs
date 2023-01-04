@@ -26,7 +26,9 @@ namespace CustomBenchmark.Core
             foreach (var config in _configuration.ConfigGenerator.GraphConfigurations)
             {
                 // Run process for generating the adjacency matrix according to the configuration file, without saving any information about it 
-                _ = RunNewProcess($"{_projectFolderPath}{_configuration.InputFilePath} {config.Vertices} {config.MaxValueWeight}", $"{_projectFolderPath}{_configuration.ConfigGenerator.ExeGeneratorPath}", 0, false);
+                _ = RunNewProcess($"{_projectFolderPath}{_configuration.InputFolderPath} {config.Vertices} {config.MaxValueWeight}", $"{_projectFolderPath}{_configuration.ConfigGenerator.ExeGeneratorPath}", 0, false);
+
+                Console.WriteLine(string.Format(Constants.MatrixDetails_Log,config.Vertices,config.MaxValueWeight));
 
                 // If any error occured, stop the process
                 if (_outputCollector.ErrorOccured)
@@ -37,19 +39,23 @@ namespace CustomBenchmark.Core
                 // Having the adjacency matrix generated according to the given configuration, run all the process and log the results
                 foreach (var exe in _configuration.ApplicationsExePaths)
                 {
+                    Console.WriteLine(string.Format(Constants.TextWithTabBefore,exe.Key));
+
                     // If the process wasn't run by this moment, add it into the dictionary
                     if (!results.ContainsKey(exe.Key))
                     {
                         results.Add(exe.Key, new());
                     }
 
+                    var filepath = string.Format(Constants.FilePathInput, _projectFolderPath,_configuration.InputFolderPath, config.Vertices,config.MaxValueWeight);
+
                     // Run the algorithm for the given graph and pick up the results
-                    results[exe.Key].Add(RunNewProcess($"{_projectFolderPath}{_configuration.InputFilePath}", $"{_projectFolderPath}{exe.Value}", _configuration.CollectionTime));
+                    results[exe.Key].Add(RunNewProcess(filepath, $"{_projectFolderPath}{exe.Value}", _configuration.CollectionTime));
                 }
             }
 
             // For each applications, display the collected results
-            WriteHelper.PrintResults(results, _configuration);
+            WriteHelper.PrintResults(results, _configuration, _projectFolderPath);
 
         }
 

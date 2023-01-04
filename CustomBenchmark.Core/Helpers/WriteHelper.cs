@@ -5,57 +5,46 @@ namespace CustomBenchmark.Core.Helpers
 {
     public static class WriteHelper
     {
-        public static void PrintResults(Dictionary<string, List<Result>> results, Config config)
+        public static void PrintResults(Dictionary<string, List<Result>> results, Config config, string projectFolder)
         {
             StreamWriter? streamWriter = null;
+            var fullOutputPath = $"{projectFolder}{config.OutputFolderPath}";
 
-            if (!Directory.Exists(config.OutputFolderPath))
+            if (!Directory.Exists(fullOutputPath))
             {
-                Directory.CreateDirectory(config.OutputFolderPath);
+                Directory.CreateDirectory(fullOutputPath);
             }
 
             try
             {
-                streamWriter = new StreamWriter($"{config.OutputFolderPath}\\{DateTime.Now.Date.Day}{DateTime.Now.Date.Month}{DateTime.Now.Date.Year}{DateTime.Now.Date.Minute}_log.txt");
+                streamWriter = new StreamWriter(string.Format(Constants.FilePathOutput, fullOutputPath, DateTime.Now.Microsecond,DateTime.Now.Date.Day,DateTime.Now.Date.Month,DateTime.Now.Year));
 
                 foreach (var application in results)
                 {
-                    streamWriter.WriteLine($"""
-                        
-                        ************************************************************
-                        ******************** {application.Key} ********************
-                        ************************************************************
-                        
-                        """);
+                    streamWriter.WriteLine(string.Format(Constants.Title_ApplicationName_OutputMessage,application.Key));
 
                     for (var i = 0; i < application.Value.Count; i++)
                     {
-                        streamWriter.WriteLine($"""
-                            
-                            ================================
-                            ======= Experiment {i + 1} =======
-                            ================================
-                            
-                            """);
+                        streamWriter.WriteLine(string.Format(Constants.SubTitle_ExperimentNumber_OutputMessage,i+1));
 
-                        streamWriter.WriteLine($"Configuration details:");
-                        streamWriter.WriteLine($"""
-                                Undirected graph with {config.ConfigGenerator.GraphConfigurations[i].Vertices} vertices and values between [0,{config.ConfigGenerator.GraphConfigurations[i].MaxValueWeight}] 
-                                The waiting time between measurements: {config.CollectionTime} ms
-                            """);
+                        streamWriter.WriteLine(string.Format(
+                            Constants.Body_ConfigurationDetailsSection_OutputMessage, 
+                            config.ConfigGenerator.GraphConfigurations[i].Vertices,
+                            config.ConfigGenerator.GraphConfigurations[i].MaxValueWeight,
+                            config.CollectionTime));
 
                         if (application.Value[i].TimeResults != null)
                         {
-                            streamWriter.WriteLine("\nTimes recorded after the following events:");
+                            streamWriter.WriteLine(Constants.Body_TimeRecorded_OutputMessage);
                             foreach (var result in application.Value[i].TimeResults!)
                             {
-                                streamWriter.WriteLine($"\t{result.Key} : {(float)result.Value.ElapsedMilliseconds / 1000} s");
+                                streamWriter.WriteLine(string.Format(Constants.Body_TimeAction_OutputMessage,result.Key,(float)result.Value.ElapsedMilliseconds / 1000));
                             }
                         }
 
-                        streamWriter.WriteLine($"\nThe memory used during the process of finding the MST: \n{application.Value[i].ProcessResult}");
-                        streamWriter.WriteLine($"\tTotal processor time : {(float)application.Value[i].TotalProcessorTime.Milliseconds / 1000} s");
-                        application.Value[i].OtherMessages?.ForEach(log => streamWriter.WriteLine($"\t{log}"));
+                        streamWriter.WriteLine(string.Format(Constants.Body_TotalMemoryMST_OutputMessage,application.Value[i].ProcessResult));
+                        streamWriter.WriteLine(string.Format(Constants.Body_TotalProcessorTime_OutputMessage,(float)application.Value[i].TotalProcessorTime.Milliseconds / 1000));
+                        application.Value[i].OtherMessages?.ForEach(log => streamWriter.WriteLine(string.Format(Constants.TextWithTabBefore,log)));
                     }
                 }
                 streamWriter.Close();
@@ -66,7 +55,7 @@ namespace CustomBenchmark.Core.Helpers
             }
             finally
             {
-                Console.WriteLine("The file was generated!");
+                Console.WriteLine(Constants.FileWasGenerated_Log);
                 streamWriter?.Dispose();
 
             }

@@ -6,6 +6,8 @@ namespace MST.UndirectedGraphGenerator
     {
         private readonly int _noVertices;
         private readonly int _maxRangeWeight;
+        private readonly string _fileName;
+        private readonly bool _matrixExists = false;
         private readonly StreamWriter? _streamWriter;
 
         internal Generator(string[] args)
@@ -16,16 +18,38 @@ namespace MST.UndirectedGraphGenerator
                 throw new ArgumentException(Constants.MissingArguments_ExceptionMessage);
             }
 
-            _streamWriter = new StreamWriter(args[0]) ?? throw new Exception(Constants.InvalidFilePath_ExceptionMessage);
-
             if (!int.TryParse(args[1], out _noVertices) || !int.TryParse(args[2], out _maxRangeWeight))
             {
                 throw new ArgumentException(Constants.InvalidArguments_ExceptionMessage);
+            }
+
+            _fileName = string.Format(Constants.FileNameReadInput, _noVertices, _maxRangeWeight);
+
+            // check if the directory exists
+            if (!Directory.Exists(args[0]))
+            {
+                _ = Directory.CreateDirectory(args[0]) ?? throw new Exception(Constants.InvalidArguments_ExceptionMessage);
+            }
+            else
+            {
+                // if the directory exists, check if any matrix with current configurations exists
+                _matrixExists = Directory.GetFiles(args[0]).Any(file => file.Contains(_fileName!));
+            }
+
+            // no matrix will be created if there is already a matrix with the same configurations
+            if (!_matrixExists)
+            {
+                _streamWriter = new StreamWriter(string.Format(Constants.FilePathReadInput, args[0], _fileName)) ?? throw new Exception(Constants.InvalidFilePath_ExceptionMessage);
             }
         }
 
         internal void GenerateAdjacencyMatrix()
         {
+            if (_matrixExists)
+            {
+                return;
+            }
+
             // Initialize the result matrix
             var matrixResult = new int[_noVertices][];
             InitResultMatrix(matrixResult);

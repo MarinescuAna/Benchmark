@@ -4,8 +4,8 @@ namespace CustomBenchmark.Core.Configuration
 {
     public sealed class Config
     {
-        [JsonPropertyName("inputFilePath")]
-        public required string InputFilePath { get; init; }
+        [JsonPropertyName("inputFolderPath")]
+        public required string InputFolderPath { get; init; }
         [JsonPropertyName("outputFolderPath")]
         public required string OutputFolderPath { get; init;}
         [JsonPropertyName("configGenerator")]

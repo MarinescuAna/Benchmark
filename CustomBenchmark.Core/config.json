@@ -14,9 +14,21 @@
       {
         "vertices": 9,
         "maxValueWeight": 30
+      },
+      {
+        "vertices": 50,
+        "maxValueWeight": 30
+      },
+      {
+        "vertices": 100,
+        "maxValueWeight": 24
+      },
+      {
+        "vertices": 100,
+        "maxValueWeight": 50
       }
     ]
   },
-  "inputFilePath": "CustomBenchmark.Core\\Inputs\\Graph.txt",
+  "inputFolderPath": "CustomBenchmark.Core\\Inputs",
   "outputFolderPath": "CustomBenchmark.Core\\Results"
 }

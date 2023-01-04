@@ -13,5 +13,8 @@
         public static readonly string InvalidArguments_ExceptionMessage = "Invalid arguments!";
         public static readonly string InvalidFilePath_ExceptionMessage = "Invalid file path!";
         public static readonly string InvalidAdjacencyMatrix_ExceptionMessage = "Invalid adjacency matrix!";
+
+        public static readonly string FileNameReadInput = "{0}_{1}_Graph.txt";
+        public static readonly string FilePathReadInput = "{0}\\{1}";
     }
 }
