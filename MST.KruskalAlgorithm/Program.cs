@@ -35,7 +35,7 @@ using (_ = new Label(Constants.InitializationAndMemoryAllocation_InfoMessage))
     algorithm = new(graph);
 }
 
-// Run algoritm for finding MST
+// Run algorithm for finding MST
 using (_ = new Label(Constants.RunProgram_InfoMessage))
 {
     algorithm.Run();

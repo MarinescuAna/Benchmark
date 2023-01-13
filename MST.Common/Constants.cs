@@ -6,7 +6,7 @@
         public static readonly string ReadArguments_InfoMessage = "Read the arguments from command-line";
         public static readonly string ReadAdjacencyMatrixAndGraphConvertion_InfoMessage = "Read the adjacency matrix from the file and convert it into a Graph object";
         public static readonly string InitializationAndMemoryAllocation_InfoMessage = "Initialize the variables and allocate memory";
-        public static readonly string RunProgram_InfoMessage = "Run algoritm for finding MST";
+        public static readonly string RunProgram_InfoMessage = "Run algorithm for finding MST";
         public static readonly string PrintMstAndSum_InfoMessage = "Print MST and the weights sum";
 
         public static readonly string MissingArguments_ExceptionMessage = "Arguments are missing!";
