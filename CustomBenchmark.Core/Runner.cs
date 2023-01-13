@@ -28,7 +28,7 @@ namespace CustomBenchmark.Core
                 // Run process for generating the adjacency matrix according to the configuration file, without saving any information about it 
                 _ = RunNewProcess($"{_projectFolderPath}{_configuration.InputFolderPath} {config.Vertices} {config.MaxValueWeight}", $"{_projectFolderPath}{_configuration.ConfigGenerator.ExeGeneratorPath}", 0, false);
 
-                Console.WriteLine(string.Format(Constants.MatrixDetails_Log,config.Vertices,config.MaxValueWeight));
+                Console.WriteLine(Constants.MatrixDetails_Log,config.Vertices,config.MaxValueWeight);
 
                 // If any error occured, stop the process
                 if (_outputCollector.ErrorOccured)
@@ -39,7 +39,7 @@ namespace CustomBenchmark.Core
                 // Having the adjacency matrix generated according to the given configuration, run all the process and log the results
                 foreach (var exe in _configuration.ApplicationsExePaths)
                 {
-                    Console.WriteLine(string.Format(Constants.TextWithTabBefore,exe.Key));
+                    Console.WriteLine(Constants.TextWithTabBefore,exe.Key);
 
                     // If the process wasn't run by this moment, add it into the dictionary
                     if (!results.ContainsKey(exe.Key))
@@ -51,6 +51,8 @@ namespace CustomBenchmark.Core
 
                     // Run the algorithm for the given graph and pick up the results
                     results[exe.Key].Add(RunNewProcess(filepath, $"{_projectFolderPath}{exe.Value}", _configuration.CollectionTime));
+
+                    Console.WriteLine(Constants.CurrentStatus_LogMessage, exe.Key,config.Vertices);
                 }
             }
 

@@ -19,6 +19,8 @@ namespace CustomBenchmark.Core.Helpers
             {
                 streamWriter = new StreamWriter(string.Format(Constants.FilePathOutput, fullOutputPath, DateTime.Now.Microsecond,DateTime.Now.Date.Day,DateTime.Now.Date.Month,DateTime.Now.Year));
 
+                streamWriter.WriteLine(Constants.GenerationDate_OutputMessage);
+
                 foreach (var application in results)
                 {
                     streamWriter.WriteLine(string.Format(Constants.Title_ApplicationName_OutputMessage,application.Key));

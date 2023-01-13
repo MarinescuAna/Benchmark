@@ -38,7 +38,7 @@ namespace MST.KruskalAlgorithm
                 }
             }
 
-            Console.WriteLine(string.Format(Constants.GarbageCollector_InfoMessage, GC.GetTotalMemory(true) / 1024));
+            Console.WriteLine(Constants.GarbageCollector_InfoMessage, GC.GetTotalMemory(true) / 1024);
         }
         internal void PrintMST() => Console.WriteLine(_minimumSpanningTree.ToString());
         private static int FindRoot(int node, int[] parent)

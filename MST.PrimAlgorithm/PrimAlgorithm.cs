@@ -51,7 +51,7 @@ namespace MST.Algorithms
                 });
             });
 
-            Console.WriteLine(string.Format(Constants.GarbageCollector_InfoMessage, GC.GetTotalMemory(true) / 1024));
+            Console.WriteLine(Constants.GarbageCollector_InfoMessage, GC.GetTotalMemory(true) / 1024);
         }
 
         /// <summary>

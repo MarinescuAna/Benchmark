@@ -15,7 +15,11 @@
         internal static readonly string FilePathOutput = "{0}\\{1}{2}{3}{4}_log.txt";
         internal static readonly string TextWithTabBefore = "\t{0}";
 
-
+        internal static readonly string CurrentStatus_LogMessage = """
+            Current status:
+                {0} was executed for {1} vertices.
+            """;
+        internal static readonly string GenerationDate_OutputMessage = $"******Date: {DateTime.Now}******\n";
         internal static readonly string Title_ApplicationName_OutputMessage = """
                         
                         ************************************************************
@@ -32,7 +36,7 @@
                             """;
         internal static readonly string Body_ConfigurationDetailsSection_OutputMessage = """
                             Configuration details:
-                                Undirected graph with {0} vertices and values between [0,{1}) 
+                                Undirected graph with **{0} vertices** and values between [0,{1}) 
                                 The waiting time between measurements: {2} ms
                             """;
         internal static readonly string Body_TimeRecorded_OutputMessage = "\nTimes recorded after the following events:";
